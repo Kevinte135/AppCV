@@ -1,28 +1,67 @@
-## Watch video https://www.youtube.com/watch?v=vK23lzJU8gw
 
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# Crear una app nativa o híbrida para enviar una notificación en el lado del cliente
+Se crea una app donde se va enviar notificaciones donde se va utilizar 	ionic node.js
 
-## How to use this template
+##  Indicaciones
+Para las notificaciones y el id que pide el plugin cordova utilizado, se creo una cuenta en google cloud plalform.
+Ademas se trabaja con la clave del servidor y el token de Firebase, ya que se vincula a ionic.
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+##  Se instala 
+$  sudo npm install -g ionic cordova
+$  ionic start myBlank blank
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+$ ionic cordova platform add android
+$ ionic cordova run android
 
-### With the Ionic CLI:
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
 
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myBlank blank
-```
 
-Then, to run it, cd into `myBlank` and run:
 
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
+##  Se prepara la pagina
+Se debe declarar el 
+*ngIf="!todos || todos.length == 0"
 
-Substitute ios for android if not on a Mac.
+{{ todo.task }}
+
+##  Configuración de la base de datos
+
+
+providers: [
+
+StatusBar,
+
+SplashScreen,
+
+{provide:  ErrorHandler, useClass:  IonicErrorHandler}
+
+]
+
+_________________________________________________________
+private  RegisterNotification() {
+
+this.push.register().then((t: PushToken) => {
+
+return  this.push.saveToken(t);
+
+}).then((t: PushToken) => {
+
+console.log('Token saved:', t.token);
+
+});
+
+}
+
+  
+
+private  Notification() {
+
+this.push.rx.notification()
+
+.subscribe((msg) => {
+
+alert(msg.title + ': ' + msg.text);
+
+});
+
+}
 
